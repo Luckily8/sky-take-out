@@ -8,11 +8,9 @@ import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
+import com.sky.entity.Setmeal;
 import com.sky.exception.DeletionNotAllowedException;
-import com.sky.mapper.CategoryMapper;
-import com.sky.mapper.DishFlavorMapper;
-import com.sky.mapper.DishMapper;
-import com.sky.mapper.SetMealDishMapper;
+import com.sky.mapper.*;
 import com.sky.result.PageResult;
 import com.sky.service.CategoryService;
 import com.sky.service.DishService;
@@ -39,6 +37,8 @@ import java.util.Objects;
     private SetMealDishMapper setMealDishMapper;
     @Autowired
     private CategoryMapper categoryMapper;
+    @Autowired
+    private SetMealMapper setMealMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -130,6 +130,30 @@ import java.util.Objects;
             flavors.forEach(flavor -> flavor.setDishId(dish.getId()));
             //保存口味列表
             dishFlavorMapper.insertBatch(flavors);
+        }
+    }
+
+    /**
+     * 单个菜品起售 1/停售 0
+     */
+    @Override
+    public void updateDishStatus(Integer status, Long id) {
+        Dish dish = Dish.builder()
+                .id(id)
+                .status(status).build();
+        dishMapper.update(dish);
+
+        //如果是停售,则停售套餐
+        if (Objects.equals(status, StatusConstant.DISABLE)) {
+            List<Long> setMealIds = setMealDishMapper.getSetMealIdsByDishIds(Collections.singletonList(dish.getId())); //查找外键关系时使用含dish的表
+            if (setMealIds != null && !setMealIds.isEmpty()) { //确实关联了套餐
+                for (Long setMealId : setMealIds) { //停售所有关联的套餐
+                    Setmeal setmeal = Setmeal.builder()
+                            .id(setMealId)
+                            .status(StatusConstant.DISABLE).build();
+                    setMealMapper.update(setmeal); //停售套餐,修改套餐时使用不包含dish的表
+                }
+            }
         }
     }
 

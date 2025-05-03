@@ -79,5 +79,17 @@ public class DishController {
         return Result.success();
     }
 
+    /**
+     * 单个菜品起售/停售
+     * 同时包含该菜品的套餐也会随之停售
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("单个菜品起售/停售")
+    public Result updateDishStatus(@PathVariable Integer status, @RequestParam Long id) {
+        log.info("单个菜品起售/停售，参数：status = {}, id = {}", status, id);
+        dishService.updateDishStatus(status, id);
+        return Result.success();
+    }
+
 
 }
