@@ -36,9 +36,6 @@ public class EmployeeController {
 
     /**
      * 登录
-     *
-     * @param employeeLoginDTO
-     * @return
      */
     @PostMapping("/login")
     @ApiOperation(value = "员工登录")
@@ -67,8 +64,6 @@ public class EmployeeController {
 
     /**
      * 退出
-     *
-     * @return
      */
     @PostMapping("/logout")
     @ApiOperation("员工退出")
