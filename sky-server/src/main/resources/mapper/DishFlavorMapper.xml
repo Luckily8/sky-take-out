@@ -15,4 +15,7 @@
             #{dishId}
         </foreach>
     </delete>
+    <select id="getFlavorByDishId" resultType="com.sky.entity.DishFlavor">
+        SELECT * FROM dish_flavor WHERE dish_id = #{dishId}
+    </select>
 </mapper>

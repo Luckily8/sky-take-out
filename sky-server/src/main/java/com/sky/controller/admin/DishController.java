@@ -57,4 +57,27 @@ public class DishController {
         return Result.success();
     }
 
+    /**
+     * 回显:跟据id查询菜品及口味
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("回显:跟据id查询菜品")
+    public Result<DishVO> getDishById(@PathVariable Long id) {
+        log.info("回显:跟据id查询菜品，参数：{}", id);
+        DishVO dishVO = dishService.getDishById(id);
+        return Result.success(dishVO);
+    }
+
+    /**
+     * 修改菜品信息以及口味信息
+     */
+    @PutMapping
+    @ApiOperation("修改菜品信息以及口味信息")
+    public Result updateDish(@RequestBody DishDTO dishDTO) {
+        log.info("修改菜品信息以及口味信息，参数：{}", dishDTO);
+        dishService.updateDishWithFlavor(dishDTO);
+        return Result.success();
+    }
+
+
 }
