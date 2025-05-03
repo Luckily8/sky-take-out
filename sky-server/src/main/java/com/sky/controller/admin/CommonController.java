@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/admin/common")
@@ -28,15 +27,20 @@ public class CommonController {
      */
     @PostMapping("/upload")
     @ApiOperation("文件上传")
-    public Result<String> upload(@RequestParam("file") MultipartFile file) throws Exception {
+    public Result<String> upload(@RequestParam("file") MultipartFile file) {
         log.info("开始上传文件: {}", file.getOriginalFilename());
         if(file.isEmpty()){
             return Result.error("文件不能为空");
         }
         // 生成唯一的文件名
         String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        // 上传文件到阿里云OSS
-        String url = aliOssUtil.upload(file.getBytes(), fileName);
-        return Result.success(url);
+        try {
+            // 上传文件到阿里云OSS
+            String url = aliOssUtil.upload(file.getBytes(), fileName);
+            return Result.success(url);
+        } catch (Exception e) {
+            log.info("上传文件失败: {}", e.getMessage());
+        }
+        return Result.error("上传文件失败");
     }
 }
