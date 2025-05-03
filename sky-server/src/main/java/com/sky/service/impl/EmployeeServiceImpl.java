@@ -98,4 +98,18 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new PageResult(page.getTotal(), page.getResult());
     }
 
+    @Override
+    public void updateStatus(Integer status, Long id) {
+        //1.逻辑:直接更新数据库对象,而不是单独自修改status
+        //2.创建emp对象,设置更新人和更新时间
+        Employee employee = Employee.builder()
+                .id(id)
+                .status(status)
+                .updateTime(LocalDateTime.now())
+                .build();
+
+        //3.更新sql
+        employeeMapper.update(employee);
+    }
+
 }
