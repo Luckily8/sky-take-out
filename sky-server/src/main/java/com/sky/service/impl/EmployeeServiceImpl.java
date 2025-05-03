@@ -31,9 +31,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * 员工登录
-     *
-     * @param employeeLoginDTO
-     * @return
      */
     public Employee login(EmployeeLoginDTO employeeLoginDTO) {
         String username = employeeLoginDTO.getUsername();
@@ -76,13 +73,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         //3、设置默认值
         employee.setStatus(StatusConstant.ENABLE);
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
 
-        //4、设置创建人和更新人
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
-
+//        //4、设置创建人和更新人
+//        employee.setCreateUser(BaseContext.getCurrentId());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
         employeeMapper.insert(employee);
     }
 
@@ -105,7 +101,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = Employee.builder()
                 .id(id)
                 .status(status)
-                .updateTime(LocalDateTime.now())
+//                .updateTime(LocalDateTime.now())
                 .build();
 
         //3.更新sql
@@ -127,9 +123,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         //2、获取更新字段
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO, employee);
-        //3、设置更新时间和更新人
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(currentId);
+//        //3、设置更新时间和更新人
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser(currentId);
 
         //5、更新员工信息
         employeeMapper.update(employee);
