@@ -38,9 +38,5 @@ public interface SetMealMapper {
     @AutoFill(OperationType.INSERT)
     void insert(Setmeal setmeal);
 
-    /**
-     * 批量插入套餐菜品关系表
-     */
-    @AutoFill(OperationType.INSERT)
-    void insertSetmealDishes(List<SetmealDish> setmealDishes);
+
 }

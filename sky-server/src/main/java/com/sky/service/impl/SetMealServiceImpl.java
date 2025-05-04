@@ -7,6 +7,7 @@ import com.sky.dto.SetmealDTO;
 import com.sky.dto.SetmealPageQueryDTO;
 import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
+import com.sky.mapper.SetMealDishMapper;
 import com.sky.mapper.SetMealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.SetMealService;
@@ -23,6 +24,8 @@ public class SetMealServiceImpl implements SetMealService {
 
     @Autowired
     private SetMealMapper setMealMapper;
+    @Autowired
+    private SetMealDishMapper setMealDishMapper;
 
     /**
      * 套餐分页查询
@@ -49,12 +52,14 @@ public class SetMealServiceImpl implements SetMealService {
         BeanUtils.copyProperties(setmealDTO, setmeal);
         setMealMapper.insert(setmeal);
         //主键返回
+        //获取生成的套餐id
+        Long setmealId = setmeal.getId();
         //插入套餐菜品关系表
         List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
         if (setmealDishes != null && !setmealDishes.isEmpty()) {
-            setmealDishes.forEach(setmealDish -> setmealDish.setSetmealId(setmeal.getId())); //DTO中不包含setmealId
+            setmealDishes.forEach(setmealDish -> setmealDish.setSetmealId(setmealId)); //DTO中不包含setmealId
             //批量插入
-            setMealMapper.insertSetmealDishes(setmealDishes);
+            setMealDishMapper.insertSetmealDishes(setmealDishes);
         }
     }
 }
