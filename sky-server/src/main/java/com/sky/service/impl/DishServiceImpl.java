@@ -157,4 +157,15 @@ import java.util.Objects;
         }
     }
 
+    /**
+     * 根据分类id查询菜品列表
+     */
+    @Override
+    public List<Dish> list(Long categoryId) {
+        //查询菜品列表
+        List<Dish> list = dishMapper.selectByCategoryId(categoryId);
+        //设置分类名称
+        return list;
+    }
+
 }

@@ -2,6 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.sky.mapper.SetMealMapper">
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO setmeal (name, category_id, price, status, description, image, create_time, create_user, update_time, update_user)
+        VALUES (#{name}, #{categoryId}, #{price}, #{status}, #{description}, #{image}, #{createTime}, #{createUser}, #{updateTime}, #{updateUser})
+    </insert>
+    <insert id="insertSetmealDishes">
+        INSERT INTO setmeal_dish (setmeal_id, dish_id, copies,price,name)
+        VALUES
+        <foreach collection="setmealDishes" item="item" separator=",">
+            (#{item.setmealId}, #{item.dishId}, #{item.copies}, #{item.price}, #{item.name})
+        </foreach>
+    </insert>
 
 
     <update id="update">
