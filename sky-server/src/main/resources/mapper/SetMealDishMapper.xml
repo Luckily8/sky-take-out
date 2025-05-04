@@ -15,6 +15,9 @@
                 #{dishId}
             </foreach>
     </select>
+    <select id="selectBySetmealId" resultType="com.sky.entity.SetmealDish">
+        SELECT * FROM setmeal_dish WHERE setmeal_id = #{setmealId}
+    </select>
 
     <insert id="insertSetmealDishes">
         INSERT INTO setmeal_dish (setmeal_id, dish_id, copies,price,name)
