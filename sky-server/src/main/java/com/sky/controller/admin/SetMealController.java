@@ -61,7 +61,7 @@ public class SetMealController {
      */
     @PostMapping("/status/{status}")
     @ApiOperation("单个起售/停售套餐")
-    public Result update(@PathVariable("status") Integer status, Long id) {
+    public Result updateStatus(@PathVariable("status") Integer status, Long id) {
         log.info("单个起售/停售套餐，参数：status = {}, id = {}", status, id);
         setMealService.updateStatus(status, id);
         return Result.success();
@@ -76,6 +76,17 @@ public class SetMealController {
         log.info("回显：根据id查询套餐，参数：id = {}", id);
         SetmealVO setmealVO = setMealService.getById(id);
         return Result.success(setmealVO);
+    }
+
+    /**
+     * 修改套餐
+     */
+    @PutMapping
+    @ApiOperation("修改套餐")
+    public Result update(@RequestBody SetmealDTO setmealDTO) {
+        log.info("修改套餐，参数：{}", setmealDTO);
+        setMealService.update(setmealDTO);
+        return Result.success();
     }
 
 
