@@ -34,5 +34,20 @@
         </set>
         WHERE id = #{id}
     </update>
+    <select id="selectPage" resultType="com.sky.vo.SetmealVO">
+        SELECT s.*,c.name as categoryName FROM setmeal s left join category c on s.category_id = c.id
+        <where>
+            <if test="name != null and name != ''">
+                AND s.name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="categoryId != null">
+                AND s.category_id = #{categoryId}
+            </if>
+            <if test="status != null">
+                AND s.status = #{status}
+            </if>
+        </where>
+        order by s.update_time desc
+    </select>
 
 </mapper>
