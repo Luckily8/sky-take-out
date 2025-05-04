@@ -55,7 +55,17 @@ public class SetMealController {
         log.info("批量删除套餐，参数：{}", ids);
         setMealService.delete(ids);
         return Result.success();
+    }
 
+    /**
+     * 单个起售/停售套餐
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("单个起售/停售套餐")
+    public Result update(@PathVariable("status") Integer status, Long id) {
+        log.info("单个起售/停售套餐，参数：status = {}, id = {}", status, id);
+        setMealService.updateStatus(status, id);
+        return Result.success();
     }
 
 

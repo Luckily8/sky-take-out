@@ -87,4 +87,16 @@ public class SetMealServiceImpl implements SetMealService {
         //根据setmealid删除套餐
         setMealMapper.deleteByIds(setmealIds);
     }
+
+    /**
+     * 单个起售/停售套餐
+     */
+    @Override
+    public void updateStatus(Integer status, Long id) {
+        //直接更新整个套餐，由动态sql来判断
+        Setmeal setmeal = Setmeal.builder()
+                .id(id)
+                .status(status).build();
+        setMealMapper.update(setmeal);
+    }
 }
