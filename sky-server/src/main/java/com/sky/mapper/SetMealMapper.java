@@ -39,4 +39,14 @@ public interface SetMealMapper {
     void insert(Setmeal setmeal);
 
 
+    /**
+     * 根据id查询套餐
+     */
+    @Select("select * from setmeal where id = #{id}")
+    Setmeal selectById(Long id);
+
+    /**
+     * 根据id批量删除套餐
+     */
+    void deleteByIds(List<Long> setmealIds);
 }

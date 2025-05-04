@@ -37,6 +37,12 @@
         </set>
         WHERE id = #{id}
     </update>
+    <delete id="deleteByIds">
+        DELETE FROM setmeal WHERE id IN
+        <foreach collection="setmealIds" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
     <select id="selectPage" resultType="com.sky.vo.SetmealVO">
         SELECT s.*,c.name as categoryName FROM setmeal s left join category c on s.category_id = c.id
         <where>
