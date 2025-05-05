@@ -1,6 +1,7 @@
 package com.sky.service;
 
 import com.sky.dto.*;
+import com.sky.result.PageResult;
 import com.sky.vo.*;
 
 public interface OrderService {
@@ -25,4 +26,17 @@ public interface OrderService {
      */
     void paySuccess(String outTradeNo);
 
+    /**
+     * 用户端分页查询订单
+     */
+    PageResult pageQuery4User(int page, int pageSize, Integer status);
+
+    /**
+     * 查询单个订单详情
+     */
+    OrderVO getOrderDetail(Long id);
+
+    void userCancelById(Long id);
+
+    void repetition(Long id);
 }

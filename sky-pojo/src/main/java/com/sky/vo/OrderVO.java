@@ -13,6 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderVO extends Orders implements Serializable {
 
+    //因为继承了Orders类，所以这里的属性可以省略
     //订单菜品信息
     private String orderDishes;
 
