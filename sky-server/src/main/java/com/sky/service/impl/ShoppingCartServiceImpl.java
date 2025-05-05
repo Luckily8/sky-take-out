@@ -45,7 +45,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             //购物车条目存在
             ShoppingCart cart = shoppingCartList.get(0);
             //更新购物车条目 数量+1
-            shoppingCartMapper.increaseNumberById(cart);
+            cart.setNumber(shoppingCart.getNumber() + 1);
+            shoppingCartMapper.updateNumberById(cart);
             return;
         }
         //不存在，插入一条数据

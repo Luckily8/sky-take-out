@@ -33,8 +33,8 @@ public interface ShoppingCartMapper {
     void deleteByUserId(Long currentId);
 
     /**
-     * 更新购物车条目数量+1
+     * 更新购物车条目数量
      */
-    @Update("UPDATE shopping_cart SET number = number + 1 WHERE id = #{id}")
-    void increaseNumberById(ShoppingCart cart);
+    @Update("UPDATE shopping_cart SET number = #{number} WHERE id = #{id}")
+    void updateNumberById(ShoppingCart cart);
 }
