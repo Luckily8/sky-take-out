@@ -100,8 +100,8 @@ public class OrderServiceImpl implements OrderService {
             orderDetailList.add(orderDetail);
         }
 
-        //向明细表插入n条数据
-//        orderDetailMapper.insertBatch(orderDetailList);
+        //向明细表插入n条数据 不做具体实现
+        orderDetailMapper.insertBatch(orderDetailList);
 
         //清理购物车中的数据
         shoppingCartMapper.deleteByUserId(userId);
@@ -118,31 +118,35 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
-     * 订单支付
-     *
-     * @param ordersPaymentDTO
-     * @return
+     * 订单支付 不做具体实现
      */
     public OrderPaymentVO payment(OrdersPaymentDTO ordersPaymentDTO) throws Exception {
         // 当前登录用户id
         Long userId = BaseContext.getCurrentId();
         User user = userMapper.getById(userId);
 
-        //调用微信支付接口，生成预支付交易单
-        JSONObject jsonObject = weChatPayUtil.pay(
-                ordersPaymentDTO.getOrderNumber(), //商户订单号
-                new BigDecimal(0.01), //支付金额，单位 元
-                "苍穹外卖订单", //商品描述
-                user.getOpenid() //微信用户的openid
-        );
-
-        if (jsonObject.getString("code") != null && jsonObject.getString("code").equals("ORDERPAID")) {
-            throw new OrderBusinessException("该订单已支付");
-        }
-
-        OrderPaymentVO vo = jsonObject.toJavaObject(OrderPaymentVO.class);
-        vo.setPackageStr(jsonObject.getString("package"));
-
+//        //调用微信支付接口，生成预支付交易单
+//        JSONObject jsonObject = weChatPayUtil.pay(
+//                ordersPaymentDTO.getOrderNumber(), //商户订单号
+//                new BigDecimal(0.01), //支付金额，单位 元
+//                "苍穹外卖订单", //商品描述
+//                user.getOpenid() //微信用户的openid
+//        );
+//
+//        if (jsonObject.getString("code") != null && jsonObject.getString("code").equals("ORDERPAID")) {
+//            throw new OrderBusinessException("该订单已支付");
+//        }
+//
+//        OrderPaymentVO vo = jsonObject.toJavaObject(OrderPaymentVO.class);
+//        vo.setPackageStr(jsonObject.getString("package"));
+        // 模拟支付成功
+        OrderPaymentVO vo = OrderPaymentVO.builder()
+                .paySign("123456")
+                .nonceStr("123456")
+                .timeStamp("123456")
+                .signType("MD5")
+                .packageStr("123456")
+                .build();
         return vo;
     }
 
