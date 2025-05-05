@@ -12,16 +12,13 @@ import com.sky.entity.Setmeal;
 import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.*;
 import com.sky.result.PageResult;
-import com.sky.service.CategoryService;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -40,6 +37,9 @@ import java.util.Objects;
     @Autowired
     private SetMealMapper setMealMapper;
 
+    /**
+     * 新增菜品
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void addDishWithFlavor(DishDTO dishDTO) {
@@ -62,17 +62,27 @@ import java.util.Objects;
 
     /**
      * 分页查询
+     * @return PageResult(total, VO对象列表)
      */
     @Override
     public PageResult page(DishPageQueryDTO dishPageQueryDTO) {
         //获取分页参数
         PageHelper.startPage(dishPageQueryDTO.getPage(), dishPageQueryDTO.getPageSize());
-        //查询
-        Page<DishVO> page = dishMapper.selectPage(dishPageQueryDTO);
+        //查询 从DTO解析出查询条件,并new为dish对象,包装mapper方法在非分页查询清空下的复用
+        //因为 PageHelper 的分页设置是基于线程上下文的，当前线程中开启的分页配置会影响后续的查询操作，直到分页设置被清除或线程结束
+        Dish dish = Dish.builder()
+                .status(dishPageQueryDTO.getStatus())
+                .name(dishPageQueryDTO.getName())
+                .categoryId(dishPageQueryDTO.getCategoryId())
+                .build();
+        Page<DishVO> page = dishMapper.selectPage(dish);
         //获取分页数据
         return new PageResult(page.getTotal(), page.getResult());
     }
 
+    /**
+     * 批量删除菜品
+     */
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void delete(List<Long> ids) {
@@ -100,7 +110,7 @@ import java.util.Objects;
     @Override
     public DishVO getDishById(Long id) {
         //获取菜品及口味信息以及分类名称
-        Dish dish = dishMapper.getById(id); //包含分类id
+        Dish dish = dishMapper.getById(id); //返回值包含分类id
         List<DishFlavor> dishFlavorList = dishFlavorMapper.getFlavorByDishId(id);
         //封装VO
         DishVO dishVO = new DishVO();
@@ -166,6 +176,18 @@ import java.util.Objects;
         List<Dish> list = dishMapper.selectByCategoryId(categoryId);
         //设置分类名称
         return list;
+    }
+
+    /**
+     * 根据条件查询菜品列表
+     * @return List<DishVO>
+     */
+    @Override
+    public List<DishVO> getDishList(Dish dish) {
+        //查询菜品列表 并未在该方法开启分页 所以默认返回所有数据
+        //复用了mapper的分页查询方法
+        List<DishVO> DishVOs = dishMapper.selectPage(dish).getResult(); //getResult去除分页信息
+        return DishVOs;
     }
 
 }
