@@ -37,4 +37,10 @@ public interface ShoppingCartMapper {
      */
     @Update("UPDATE shopping_cart SET number = #{number} WHERE id = #{id}")
     void updateNumberById(ShoppingCart cart);
+
+    /**
+     * 根据id删除购物车条目
+     */
+    @Delete("DELETE FROM shopping_cart WHERE id = #{id}")
+    void deleteById(Long id);
 }

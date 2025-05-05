@@ -45,7 +45,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             //购物车条目存在
             ShoppingCart cart = shoppingCartList.get(0);
             //更新购物车条目 数量+1
-            cart.setNumber(shoppingCart.getNumber() + 1);
+            cart.setNumber(cart.getNumber() + 1);
             shoppingCartMapper.updateNumberById(cart);
             return;
         }
@@ -89,5 +89,30 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         //查询当前用户的购物车 selectList方法的动态sql复用
         ShoppingCart shoppingCart = ShoppingCart.builder().userId(currentId).build();
         return shoppingCartMapper.selectList(shoppingCart);
+    }
+
+    /**
+     * 减少购物车中的一个商品
+     */
+    @Override
+    public void subShoppingCart(ShoppingCartDTO shoppingCartDTO) {
+        Long currentId = BaseContext.getCurrentId();
+        //查询当前用户的购物车 selectList方法的动态sql复用
+        ShoppingCart shoppingCart = ShoppingCart.builder().userId(currentId).build();
+        List<ShoppingCart> shoppingCartList = shoppingCartMapper.selectList(shoppingCart);
+        if (shoppingCartList != null && !shoppingCartList.isEmpty()) {
+            //购物车条目存在
+            ShoppingCart cart = shoppingCartList.get(0);
+            //更新购物车条目 数量-1
+            cart.setNumber(cart.getNumber() - 1);
+            if (cart.getNumber() <= 0) {
+                //数量为0，删除该条目
+                shoppingCartMapper.deleteById(cart.getId());
+            } else {
+                shoppingCartMapper.updateNumberById(cart);
+            }
+        } else {
+            log.warn("购物车中没有该商品");
+        }
     }
 }
