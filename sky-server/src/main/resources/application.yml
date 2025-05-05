@@ -38,11 +38,20 @@ sky:
   jwt:
     # 设置jwt签名加密时使用的秘钥
     admin-secret-key: itcast
-    # 设置jwt过期时间
+    # 设置jwt过期时间(20小时）
     admin-ttl: 72000000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+    # 设置用户jwt签名加密时使用
+    user-secret-key: itheima
+    # 设置用户jwt过期时间(20小时）
+    user-ttl: 72000000
+    # 设置前端传递过来的令牌名称
+    user-token-name: authentication
   alioss:
     region: ${sky.alioss.region}
     endpoint: ${sky.alioss.endpoint}
     bucket-name: ${sky.alioss.bucket-name}
+  wechat:
+    appid: ${sky.wechat.appid}
+    secret: ${sky.wechat.secret}
