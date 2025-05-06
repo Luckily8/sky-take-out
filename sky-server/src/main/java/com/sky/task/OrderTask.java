@@ -24,7 +24,7 @@ public class OrderTask {
      */
     @Scheduled(cron = "0 * * * * *")
     public void processTimeoutOrder() {
-        log.info("开始清理超时订单...");
+//        log.info("开始清理超时订单...");
         // 调用 mapper 方法清理超时未支付订单(距离下单时间超过15分钟的订单)
         LocalDateTime ddl = LocalDateTime.now().plusMinutes(-15);
         List<Orders> ordersList = orderMapper.getByStatusAndDdl(Orders.PENDING_PAYMENT, ddl);
@@ -38,7 +38,7 @@ public class OrderTask {
                 orderMapper.update(order);
             });
         }
-        log.info("清理超时订单成功,共清理了{}条数据", count);
+//        log.info("清理超时订单成功,共清理了{}条数据", count);
     }
 
     /**
