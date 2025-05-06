@@ -44,6 +44,13 @@ public interface OrderMapper {
     Orders getById(Long id);
 
     /**
+     * 根据状态统计订单数量
+     * @param status
+     */
+    @Select("select count(id) from orders where status = #{status}")
+    Integer countStatus(Integer status);
+
+    /**
      * 联表查询订单信息(无法直接封装内层的detailsList,该方法无效）
      */
 //    Page<OrderVO> pageQueryWithDetails(Orders orders);

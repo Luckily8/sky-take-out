@@ -1,6 +1,7 @@
 package com.sky.handler;
 
 import com.sky.exception.BaseException;
+import com.sky.exception.OrderBusinessException;
 import com.sky.result.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -35,5 +36,11 @@ public class GlobalExceptionHandler {
             return Result.error(split[2] + "已存在");
         }
         return Result.error("数据库出错,操作失败");
+    }
+
+    @ExceptionHandler
+    public Result exceptionHandler(OrderBusinessException ex){
+        log.info("百度地图Api异常信息：{}", ex.getMessage());
+        return Result.error(ex.getMessage());
     }
 }
