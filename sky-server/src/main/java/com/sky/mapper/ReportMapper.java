@@ -16,4 +16,9 @@ public interface ReportMapper {
      * map条件查询
      */
     Double sumTurnoverByMap(Map map);
+
+    /**
+     * map条件查询
+     */
+    Integer countOrderByMap(Map map);
 }

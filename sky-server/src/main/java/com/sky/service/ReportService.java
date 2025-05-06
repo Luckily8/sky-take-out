@@ -17,9 +17,10 @@ public interface ReportService {
      */
     UserReportVO userStatistics(LocalDate begin, LocalDate end);
 
-//    /**
-//     * 统计订单数量
-//     */
-//    OrderReportVO ordersStatistics(LocalDate begin, LocalDate end);
+    /**
+     * 统计订单数量
+     */
+    OrderReportVO ordersStatistics(LocalDate begin, LocalDate end);
+
 
 }

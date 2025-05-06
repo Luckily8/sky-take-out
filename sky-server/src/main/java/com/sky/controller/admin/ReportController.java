@@ -48,15 +48,15 @@ public class ReportController {
         return Result.success(userReportVO);
     }
 
-//    /**
-//     * 统计订单数量
-//     */
-//    @GetMapping("/ordersStatistics")
-//    @ApiOperation("订单统计")
-//    public Result<OrderReportVO> ordersStatistics(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin, @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end) {
-//        log.info("订单统计,begin:{},end:{}", begin, end);
-//        OrderReportVO orderReportVO = reportService.ordersStatistics(begin, end);
-//        return Result.success(orderReportVO);
-//    }
+    /**
+     * 统计订单数量
+     */
+    @GetMapping("/ordersStatistics")
+    @ApiOperation("订单统计")
+    public Result<OrderReportVO> ordersStatistics(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin, @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end) {
+        log.info("订单统计,begin:{},end:{}", begin, end);
+        OrderReportVO orderReportVO = reportService.ordersStatistics(begin, end);
+        return Result.success(orderReportVO);
+    }
 
 }
