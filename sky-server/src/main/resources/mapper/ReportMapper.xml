@@ -34,4 +34,19 @@
                 and status = #{status}</if>
         </where>
     </select>
+    <select id="getSalesTop10" resultType="com.sky.dto.GoodsSalesDTO">
+        select od.name,count(od.name) as number
+        from order_detail od left join orders os on od.order_id = os.id
+        <where>
+        <if test="startTime != null">
+            and os.order_time &gt;= #{startTime}</if>
+        <if test="endTime != null">
+            and os.order_time &lt;= #{endTime}</if>
+        <if test="status != null">
+            and os.status = #{status}</if>
+        </where>
+        group by od.name
+        order by number desc
+        limit 0,10
+    </select>
 </mapper>
