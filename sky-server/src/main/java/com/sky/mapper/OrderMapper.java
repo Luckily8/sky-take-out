@@ -57,6 +57,11 @@ public interface OrderMapper {
     List<Orders> getByStatusAndDdl(Integer status, LocalDateTime ddl);
 
     /**
+     * map条件查询
+     */
+    Double sumByMap(Map map);
+
+    /**
      * 联表查询订单信息(无法直接封装内层的detailsList,该方法无效）
      */
 //    Page<OrderVO> pageQueryWithDetails(Orders orders);
