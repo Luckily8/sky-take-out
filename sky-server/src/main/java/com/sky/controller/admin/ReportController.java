@@ -2,7 +2,9 @@ package com.sky.controller.admin;
 
 import com.sky.result.Result;
 import com.sky.service.ReportService;
+import com.sky.vo.OrderReportVO;
 import com.sky.vo.TurnoverReportVO;
+import com.sky.vo.UserReportVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -29,9 +31,32 @@ public class ReportController {
      */
     @GetMapping("/turnoverStatistics")
     @ApiOperation("营业额统计")
-    public Result<TurnoverReportVO> turnoverStatistics(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin,@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end) {
+    public Result<TurnoverReportVO> turnoverStatistics(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin, @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end) {
         log.info("营业额统计,begin:{},end:{}", begin, end);
-        TurnoverReportVO turnoverReportVO = reportService.turnoverStatistics(begin,end);
+        TurnoverReportVO turnoverReportVO = reportService.turnoverStatistics(begin, end);
         return Result.success(turnoverReportVO);
     }
+
+    /**
+     * 统计用户数量
+     */
+    @GetMapping("/userStatistics")
+    @ApiOperation("用户统计")
+    public Result<UserReportVO> userStatistics(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin, @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end) {
+        log.info("用户统计,begin:{},end:{}", begin, end);
+        UserReportVO userReportVO = reportService.userStatistics(begin, end);
+        return Result.success(userReportVO);
+    }
+
+//    /**
+//     * 统计订单数量
+//     */
+//    @GetMapping("/ordersStatistics")
+//    @ApiOperation("订单统计")
+//    public Result<OrderReportVO> ordersStatistics(@DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin, @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end) {
+//        log.info("订单统计,begin:{},end:{}", begin, end);
+//        OrderReportVO orderReportVO = reportService.ordersStatistics(begin, end);
+//        return Result.success(orderReportVO);
+//    }
+
 }
