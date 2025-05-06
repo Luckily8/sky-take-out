@@ -51,6 +51,12 @@ public interface OrderMapper {
     Integer countStatus(Integer status);
 
     /**
+     * 查询超时订单
+     */
+    @Select("select * from orders where status = #{status} and orders.order_time < #{ddl}")
+    List<Orders> getByStatusAndDdl(Integer status, LocalDateTime ddl);
+
+    /**
      * 联表查询订单信息(无法直接封装内层的detailsList,该方法无效）
      */
 //    Page<OrderVO> pageQueryWithDetails(Orders orders);
