@@ -16,12 +16,14 @@ public interface ReportMapper {
     Integer countUserByMap(Map map);
 
     /**
-     * map条件查询
+     * map条件查询营业额
+     * @return double 营业额
      */
     Double sumTurnoverByMap(Map map);
 
     /**
      * map条件查询
+     * @return Integer 相关订单数量
      */
     Integer countOrderByMap(Map map);
 
