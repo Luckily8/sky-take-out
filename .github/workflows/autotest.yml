@@ -1,29 +1,17 @@
-name: Autotest CI
+name: Trigger Autotest
 
 on:
   push:
-    branches: [main]
+    branches: [main, master]
   pull_request:
 
 jobs:
-  autotest:
-    runs-on: ubuntu-latest      # 云端分配Ubuntu服务器
-
+  trigger-autotest:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4   # 拉取主仓库代码（包括 autotest 目录）
-
-      # 如有子模块也自动拉取
-      - name: Checkout submodules
-        run: git submodule update --init --recursive
-
-      # 安装 Python 依赖
-      - name: Install dependencies
-        run: |
-          cd autotest
-          pip install -r requirements.txt
-
-      # 运行自动测试
-      - name: Run autotest
-        run: |
-          cd autotest
-          pytest
+      - name: Call autotest repo workflow
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.AUTOTEST_TOKEN }}
+          repository: Luckily8/web_platform_autotest
+          event-type: run-autotest
