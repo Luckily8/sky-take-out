@@ -1,14 +1,31 @@
-## 苍穹外卖-单体项目
-### 2025.5.6 20:00 基本功能已完全实现,工程已毕.
-功能:
-  1. 
-项目核心技术栈:
-    核心技术栈：SSM后端框架、WebSocket实时推送、JWT登录校验
-    数据库与缓存：MySQL、Redis
-项目难点及实现:
-  1.  高效数据查询优化：通过SQL分页查询与聚合统计，配合Redis缓存加速接口响应性能
-  2.  MySQL与Redis缓存一致性：采用旁路缓存模式，同时通过异步任务定时校验缓存与数据
-  3.  订单管理与状态流转：引入事务管理，结合状态机模式设计，保障订单状态的流转逻辑严谨
-  4.  模块化设计：模块化为common(公共包)，pojo(实体类)与server(服务端)，服务端采用分层架构设计（Controller-Service-Mapper），降低模块间耦合度，提升代码可维护性
-  5.  微信登录与支付功能：通过微信官方SDK 实现登录功能，模拟微信支付流程实现支付请求、成功回调功能
+# 购物交互平台（测试开发能力展示）
 
+## 项目简介
+...
+
+## 技术架构
+- SSM后端框架
+- JWT鉴权
+- MySQL+Redis
+- Swagger+ApiFox
+- Python+pytest自动化测试
+- GitHub Actions 持续集成
+
+## 测试开发能力亮点
+
+- 自动化接口测试（pytest+requests）
+- Web自动化流程测试（selenium）
+- Swagger一键生成接口测试用例
+- CI/CD自动触发测试与代码扫描
+- Mock服务与测试环境支持
+
+## 快速体验
+
+```bash
+# 运行接口测试
+cd autotest
+pytest --alluredir=./results
+allure serve ./results
+
+# 本地部署测试环境
+docker-compose up -d
