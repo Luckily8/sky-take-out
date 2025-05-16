@@ -4,14 +4,21 @@ on:
   push:
     branches: [main, master]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   trigger-autotest:
     runs-on: ubuntu-latest
     steps:
+      - name: 🌟 触发 autotest 自动化测试流程
+        run: echo "🚀 正在准备触发 web_platform_autotest 仓库的自动化测试，请耐心等待结果..."
+
       - name: Call autotest repo workflow
         uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.AUTOTEST_TOKEN }}
           repository: Luckily8/web_platform_autotest
           event-type: run-autotest
+
+      - name: ✅ autotest 触发完成
+        run: echo "🎉 autotest 仓库的自动测试已成功触发，请前往对应仓库查看执行详情。"
